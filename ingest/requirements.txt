@@ -1,0 +1,7 @@
+ipykernel
+pandas 
+requests
+lxml
+datetime
+isodate
+psycopg2

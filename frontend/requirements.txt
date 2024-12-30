@@ -1,0 +1,6 @@
+plotly
+dash
+pandas
+psycopg2-binary
+jupyter
+openpyxl

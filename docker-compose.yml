@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - psqldata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    environment:
+      POSTGRES_DB: verso_database
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: versosql
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d verso_database"]
+      interval: 1s
+      retries: 5
+    
+  process:
+    build: process/
+    volumes:
+      - ./process/:/process/
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: frontend/
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - "8000:5000"
+      - "8888:8888"
+      - "8050:8050"
+    depends_on:
+      db: 
+        condition: service_healthy
+
+volumes:
+  psqldata:

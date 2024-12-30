@@ -1,0 +1,78 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+
+.dash_page {
+    font-family: 'Open Sans';
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    background: linear-gradient(to right, #97D700, #0057B8);
+    color: white;
+    margin-left: 0vw;
+    margin-right: 0vw;
+    box-sizing: border-box;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+    padding: 0.25vw;
+}
+
+.page_title {
+    text-align: center;
+    width: 87%;
+    font-size: 2vw;
+}
+
+.section_title {
+    text-align: left;
+    width: 100%;
+    font-size: 1.5vw;
+}
+
+.logo {
+    width: 13%;
+}
+
+.horizontal_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.figure_container {
+    width: 50%;
+    align-self: flex-start;
+}
+
+.menu {
+    justify-content: space-evenly;
+}
+
+.menu_item {
+    box-sizing: border-box;
+    height: 2vw;
+    width: auto;
+    text-align: center;
+    padding: 0;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+    font-size: 0.7vw;
+}
+
+.tab_container {
+    width: 70%;
+}
+
+.footer {
+    align-self: flex-start;
+    font-size: 0.7vw;
+}
+
+
+
+

@@ -1,0 +1,5 @@
+lxml
+isodate
+psycopg2-binary
+pandas
+tqdm
