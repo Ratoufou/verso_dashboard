@@ -1,12 +1,12 @@
 <Publication_MarketDocument xmlns="urn:iec62325.351:tc57wg16:451-3:publicationdocument:7:3">
-    <mRID>0f383271a8d34e7fa57b35ac2a655dc2</mRID>
+    <mRID>389a31ae1e0d4282a97374f531247e46</mRID>
     <revisionNumber>1</revisionNumber>
     <type>A44</type>
     <sender_MarketParticipant.mRID codingScheme="A01">10X1001A1001A450</sender_MarketParticipant.mRID>
     <sender_MarketParticipant.marketRole.type>A32</sender_MarketParticipant.marketRole.type>
     <receiver_MarketParticipant.mRID codingScheme="A01">10X1001A1001A450</receiver_MarketParticipant.mRID>
     <receiver_MarketParticipant.marketRole.type>A33</receiver_MarketParticipant.marketRole.type>
-    <createdDateTime>2024-12-19T10:42:02Z</createdDateTime>
+    <createdDateTime>2025-01-09T08:42:08Z</createdDateTime>
     <period.timeInterval>
         <start>2024-12-18T23:00Z</start>
         <end>2024-12-19T23:00Z</end>

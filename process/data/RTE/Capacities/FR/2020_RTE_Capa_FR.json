@@ -1,0 +1,106 @@
+{
+    "capacities_per_production_type": {
+        "start_date": "2020-01-01T00:00:00+01:00",
+        "end_date": "2021-01-01T00:00:00+01:00",
+        "values": [
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "BIOMASS",
+                "value": 1578,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "FOSSIL_GAS",
+                "value": 12238,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "FOSSIL_HARD_COAL",
+                "value": 2977,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "FOSSIL_OIL",
+                "value": 2874,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "HYDRO_PUMPED_STORAGE",
+                "value": 4656,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "HYDRO_RUN_OF_RIVER_AND_POUNDAGE",
+                "value": 9759,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "HYDRO_WATER_RESERVOIR",
+                "value": 7188,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "MARINE",
+                "value": 246,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "NUCLEAR",
+                "value": 63130,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "SOLAR",
+                "value": 9438,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "WASTE",
+                "value": 460.15,
+                "updated_date": "2021-03-05T12:24:33+01:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "WIND_OFFSHORE",
+                "value": 14,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "WIND_ONSHORE",
+                "value": 16578,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            },
+            {
+                "start_date": "2020-01-01T00:00:00+01:00",
+                "end_date": "2021-01-01T00:00:00+01:00",
+                "type": "OTHER",
+                "value": 1070,
+                "updated_date": "2021-03-30T21:43:43+02:00"
+            }
+        ]
+    }
+}

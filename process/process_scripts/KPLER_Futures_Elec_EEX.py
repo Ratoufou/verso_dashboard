@@ -23,9 +23,9 @@ def KPLER_Futures_Elec_EEX_process(date, country, dir, DB_CONFIG):
         for _, row in df.iterrows():
 
             cursor.execute(
-                ('INSERT INTO elec_futures_market' 
-                 '(trading_date, delivery_start, delivery_end, source, country, peak, tenor, settlement_price, currency)' 
-                 'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                ('INSERT INTO elec_futures_market ' 
+                 '(trading_date, delivery_start, delivery_end, source, country, peak, tenor, settlement_price, currency) ' 
+                 'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) '
                  'ON CONFLICT (trading_date, delivery_start, delivery_end, source, country, peak) DO NOTHING'),
 
                 (row['trading_date'], 

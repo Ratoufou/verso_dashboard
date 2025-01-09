@@ -1,0 +1,245 @@
+{
+    "total_count": 48,
+    "results": [
+        {
+            "horodate": "2023-12-31T00:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T00:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T01:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T01:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T02:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T02:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T03:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T03:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T04:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T04:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T05:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.4
+        },
+        {
+            "horodate": "2023-12-31T05:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.4
+        },
+        {
+            "horodate": "2023-12-31T06:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.4
+        },
+        {
+            "horodate": "2023-12-31T06:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T07:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T07:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T08:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T08:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T09:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 4.3
+        },
+        {
+            "horodate": "2023-12-31T09:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 4.5
+        },
+        {
+            "horodate": "2023-12-31T10:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 4.7
+        },
+        {
+            "horodate": "2023-12-31T10:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.3,
+            "temperature_normale_lissee_degc": 4.9
+        },
+        {
+            "horodate": "2023-12-31T11:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.4,
+            "temperature_normale_lissee_degc": 5.1
+        },
+        {
+            "horodate": "2023-12-31T11:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 5.3
+        },
+        {
+            "horodate": "2023-12-31T12:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 5.5
+        },
+        {
+            "horodate": "2023-12-31T12:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 5.5
+        },
+        {
+            "horodate": "2023-12-31T13:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 5.6
+        },
+        {
+            "horodate": "2023-12-31T13:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 5.6
+        },
+        {
+            "horodate": "2023-12-31T14:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 5.7
+        },
+        {
+            "horodate": "2023-12-31T14:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.4,
+            "temperature_normale_lissee_degc": 5.7
+        },
+        {
+            "horodate": "2023-12-31T15:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.4,
+            "temperature_normale_lissee_degc": 5.8
+        },
+        {
+            "horodate": "2023-12-31T15:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 5.6
+        },
+        {
+            "horodate": "2023-12-31T16:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 5.5
+        },
+        {
+            "horodate": "2023-12-31T16:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 5.3
+        },
+        {
+            "horodate": "2023-12-31T17:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.9,
+            "temperature_normale_lissee_degc": 5.2
+        },
+        {
+            "horodate": "2023-12-31T17:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.8,
+            "temperature_normale_lissee_degc": 5.0
+        },
+        {
+            "horodate": "2023-12-31T18:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.8
+        },
+        {
+            "horodate": "2023-12-31T18:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.8
+        },
+        {
+            "horodate": "2023-12-31T19:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.7
+        },
+        {
+            "horodate": "2023-12-31T19:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.7
+        },
+        {
+            "horodate": "2023-12-31T20:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.7
+        },
+        {
+            "horodate": "2023-12-31T20:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T21:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T21:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T22:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T22:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T23:00:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        },
+        {
+            "horodate": "2023-12-31T23:30:00+00:00",
+            "temperature_realisee_lissee_degc": 8.7,
+            "temperature_normale_lissee_degc": 4.6
+        }
+    ]
+}

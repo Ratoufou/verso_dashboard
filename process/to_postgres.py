@@ -18,9 +18,12 @@ DB_CONFIG = {
 }
 
 process_dict = {
-    'ENTSOE/DayAhead' : process_scripts.ENTSOE_DayAhead_process,
-    'KPLER/Futures/Elec/EEX' : process_scripts.KPLER_Futures_Elec_EEX_process,
-    'KPLER/DayAhead/Gas/EEX' : process_scripts.KPLER_DayAhead_Gas_EEX_process
+    # 'ENTSOE/DayAhead' : process_scripts.ENTSOE_DayAhead_process,
+    # 'KPLER/Futures/Elec/EEX' : process_scripts.KPLER_Futures_Elec_EEX_process,
+    # 'KPLER/DayAhead/Gas/EEX' : process_scripts.KPLER_DayAhead_Gas_EEX_process,
+    'RTE/Consumption' : process_scripts.RTE_Consumption_process,
+    'RTE/Production' : process_scripts.RTE_Production_process,
+    'RTE/Capacities' : process_scripts.RTE_Capacities_process
 }
 
 for date in tqdm(pd.date_range(start=args.start, end=args.end, freq='D', inclusive='both').date):

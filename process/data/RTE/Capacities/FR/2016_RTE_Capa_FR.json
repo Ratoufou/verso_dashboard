@@ -1,0 +1,99 @@
+{
+    "capacities_per_production_type": {
+        "start_date": "2016-01-01T00:00:00+01:00",
+        "end_date": "2017-01-01T00:00:00+01:00",
+        "values": [
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "BIOMASS",
+                "value": 170,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "FOSSIL_GAS",
+                "value": 6121,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "FOSSIL_HARD_COAL",
+                "value": 2930,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "FOSSIL_OIL",
+                "value": 6670,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "HYDRO_PUMPED_STORAGE",
+                "value": 4965,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "HYDRO_RUN_OF_RIVER_AND_POUNDAGE",
+                "value": 10325.5,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "HYDRO_WATER_RESERVOIR",
+                "value": 8204,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "MARINE",
+                "value": 240,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "NUCLEAR",
+                "value": 63130,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "SOLAR",
+                "value": 6772,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "WIND_OFFSHORE",
+                "value": 0,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "WIND_ONSHORE",
+                "value": 11761,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            },
+            {
+                "start_date": "2016-01-01T00:00:00+01:00",
+                "end_date": "2017-01-01T00:00:00+01:00",
+                "type": "OTHER",
+                "value": 62,
+                "updated_date": "2019-11-29T19:59:48+01:00"
+            }
+        ]
+    }
+}

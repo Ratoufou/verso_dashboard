@@ -42,9 +42,9 @@ def ENTSOE_DayAhead_process(date, country, dir, DB_CONFIG):
 
     for timestamp, row in df.iterrows():
         cursor.execute(
-            ('INSERT INTO elec_day_ahead_market' 
-             '(delivery_start, delivery_end, source, country, tenor, price, currency)' 
-             'VALUES (%s, %s, %s, %s, %s, %s, %s)'
+            ('INSERT INTO elec_day_ahead_market ' 
+             '(delivery_start, delivery_end, source, country, tenor, price, currency) ' 
+             'VALUES (%s, %s, %s, %s, %s, %s, %s) '
              'ON CONFLICT (delivery_start, delivery_end, source, country) DO NOTHING'),
 
             (timestamp, 

@@ -1,15 +1,53 @@
+import os
+import psycopg2
 import pandas as pd
-
+import json
+from isodate import duration_isoformat
 
 def RTE_Consumption_process(date, country, dir, DB_CONFIG):
-    resp_json = get_rte_data()
-    df_ls = []
-    for e in resp_json['short_term']:
-        var_type = e['type']
+
+    file = f'{date}_RTE_Cons_{country}.json'
+    path = os.path.join(dir, file)
+
+    if not(os.path.exists(path)):
+        return None
+    
+    with open(path, 'r') as f:
+        cons_dict = json.load(f)
+
+    ts_dict = dict()
+    for e in cons_dict['short_term']:
+        cons_type = e['type']
+        if (cons_type == 'CORRECTED') or (len(e['values']) == 0):
+            continue
         df = pd.DataFrame(e['values'])
-        df['start_date'] = pd.to_datetime(df['start_date'], utc=True)
-        df.drop(['end_date', 'updated_date'], inplace=True, axis=1, errors='ignore')
-        df.rename(columns={'value' : var_type, 'start_date' : 'Timestamp'}, inplace=True)
-        df.set_index('Timestamp', inplace=True, drop=True)
-        df_ls.append(df.tz_localize(None))
-    return pd.concat(df_ls, axis=1)
+        df.start_date = pd.to_datetime(df.start_date, utc=True).dt.tz_localize(None)
+        df.end_date = pd.to_datetime(df.end_date, utc=True).dt.tz_localize(None)
+        df['tenor'] = (df.end_date - df.start_date).apply(lambda x: duration_isoformat(x))
+        ts_dict[cons_type] = df
+
+
+    conn = psycopg2.connect(**DB_CONFIG)
+    cursor = conn.cursor()
+
+    for cons_type in ts_dict.keys():
+        for _, row in ts_dict[cons_type].iterrows():
+            cursor.execute(
+                ('INSERT INTO consumption ' 
+                '(cons_start, cons_end, source, country, tenor, curve_type, quantity, unit) ' 
+                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s) '
+                'ON CONFLICT (cons_start, cons_end, source, country, curve_type) DO NOTHING'),
+
+                (row.start_date, 
+                 row.end_date, 
+                 'RTE', 
+                 country, 
+                 row.tenor, 
+                 cons_type,
+                 round(float(row.value), 2), 
+                 'MW')
+            )
+    
+    conn.commit()
+    cursor.close()
+    conn.close()

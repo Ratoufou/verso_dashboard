@@ -16,6 +16,9 @@ def KPLER_DayAhead_Gas_EEX_process(date, country, dir, DB_CONFIG):
         return None
 
     df['tenor'] = df['tenor'].replace({'DA' : 'Day', 'WE' : 'Weekend'})
+    df.trading_date = pd.to_datetime(df.trading_date).dt.date
+    df.delivery_start = pd.to_datetime(df.delivery_start).dt.date
+    df.delivery_end = pd.to_datetime(df.delivery_end).dt.date
 
     conn = psycopg2.connect(**DB_CONFIG)
     cursor = conn.cursor()
@@ -23,9 +26,9 @@ def KPLER_DayAhead_Gas_EEX_process(date, country, dir, DB_CONFIG):
     for _, row in df.iterrows():
 
         cursor.execute(
-            ('INSERT INTO gas_day_ahead_market' 
-             '(trading_date, delivery_start, delivery_end, source, country, tenor, last_price, currency)' 
-             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
+            ('INSERT INTO gas_day_ahead_market ' 
+             '(trading_date, delivery_start, delivery_end, source, country, tenor, last_price, currency) ' 
+             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s) '
              'ON CONFLICT (trading_date, delivery_start, delivery_end, source, country) DO NOTHING'),
 
             (row['trading_date'], 

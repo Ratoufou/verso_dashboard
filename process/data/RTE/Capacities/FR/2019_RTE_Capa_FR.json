@@ -1,0 +1,127 @@
+{
+    "capacities_per_production_type": {
+        "start_date": "2019-01-01T00:00:00+01:00",
+        "end_date": "2020-01-01T00:00:00+01:00",
+        "values": [
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "BIOMASS",
+                "value": 1931,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_BROWN_COAL_LIGNITE",
+                "value": 12155.75,
+                "updated_date": "2020-07-17T12:20:03+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_COAL_DERIVED_GAS",
+                "value": 2967.96,
+                "updated_date": "2020-07-17T12:20:03+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_GAS",
+                "value": 11952,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_HARD_COAL",
+                "value": 3966,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_OIL",
+                "value": 3271,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_OIL_SHALE",
+                "value": 8279,
+                "updated_date": "2020-07-17T12:20:03+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "FOSSIL_PEAT",
+                "value": 240,
+                "updated_date": "2020-07-17T12:20:03+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "HYDRO_PUMPED_STORAGE",
+                "value": 5023,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "HYDRO_RUN_OF_RIVER_AND_POUNDAGE",
+                "value": 10955,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "HYDRO_WATER_RESERVOIR",
+                "value": 8279,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "MARINE",
+                "value": 240,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "NUCLEAR",
+                "value": 63130,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "SOLAR",
+                "value": 8188,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "WIND_OFFSHORE",
+                "value": 0,
+                "updated_date": "2018-12-03T16:32:48+01:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "WIND_ONSHORE",
+                "value": 13610,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            },
+            {
+                "start_date": "2019-01-01T00:00:00+01:00",
+                "end_date": "2020-01-01T00:00:00+01:00",
+                "type": "OTHER",
+                "value": 108,
+                "updated_date": "2020-07-21T13:55:56+02:00"
+            }
+        ]
+    }
+}

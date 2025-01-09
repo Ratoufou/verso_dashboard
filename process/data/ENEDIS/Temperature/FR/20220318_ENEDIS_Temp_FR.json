@@ -1,0 +1,245 @@
+{
+    "total_count": 48,
+    "results": [
+        {
+            "horodate": "2022-03-18T00:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.7,
+            "temperature_normale_lissee_degc": 8.4
+        },
+        {
+            "horodate": "2022-03-18T00:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.7,
+            "temperature_normale_lissee_degc": 8.3
+        },
+        {
+            "horodate": "2022-03-18T01:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 8.3
+        },
+        {
+            "horodate": "2022-03-18T01:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 8.3
+        },
+        {
+            "horodate": "2022-03-18T02:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 8.3
+        },
+        {
+            "horodate": "2022-03-18T02:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.6,
+            "temperature_normale_lissee_degc": 8.2
+        },
+        {
+            "horodate": "2022-03-18T03:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 8.2
+        },
+        {
+            "horodate": "2022-03-18T03:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 8.2
+        },
+        {
+            "horodate": "2022-03-18T04:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.4,
+            "temperature_normale_lissee_degc": 8.1
+        },
+        {
+            "horodate": "2022-03-18T04:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.3,
+            "temperature_normale_lissee_degc": 8.1
+        },
+        {
+            "horodate": "2022-03-18T05:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 8.0
+        },
+        {
+            "horodate": "2022-03-18T05:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 7.9
+        },
+        {
+            "horodate": "2022-03-18T06:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 7.8
+        },
+        {
+            "horodate": "2022-03-18T06:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 7.8
+        },
+        {
+            "horodate": "2022-03-18T07:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 7.8
+        },
+        {
+            "horodate": "2022-03-18T07:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.0,
+            "temperature_normale_lissee_degc": 7.9
+        },
+        {
+            "horodate": "2022-03-18T08:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.1,
+            "temperature_normale_lissee_degc": 8.0
+        },
+        {
+            "horodate": "2022-03-18T08:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.2,
+            "temperature_normale_lissee_degc": 8.1
+        },
+        {
+            "horodate": "2022-03-18T09:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.3,
+            "temperature_normale_lissee_degc": 8.3
+        },
+        {
+            "horodate": "2022-03-18T09:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.5,
+            "temperature_normale_lissee_degc": 8.6
+        },
+        {
+            "horodate": "2022-03-18T10:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.7,
+            "temperature_normale_lissee_degc": 8.8
+        },
+        {
+            "horodate": "2022-03-18T10:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.0,
+            "temperature_normale_lissee_degc": 9.1
+        },
+        {
+            "horodate": "2022-03-18T11:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.2,
+            "temperature_normale_lissee_degc": 9.3
+        },
+        {
+            "horodate": "2022-03-18T11:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.5,
+            "temperature_normale_lissee_degc": 9.6
+        },
+        {
+            "horodate": "2022-03-18T12:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.8,
+            "temperature_normale_lissee_degc": 9.9
+        },
+        {
+            "horodate": "2022-03-18T12:30:00+00:00",
+            "temperature_realisee_lissee_degc": 11.0,
+            "temperature_normale_lissee_degc": 9.9
+        },
+        {
+            "horodate": "2022-03-18T13:00:00+00:00",
+            "temperature_realisee_lissee_degc": 11.1,
+            "temperature_normale_lissee_degc": 10.0
+        },
+        {
+            "horodate": "2022-03-18T13:30:00+00:00",
+            "temperature_realisee_lissee_degc": 11.2,
+            "temperature_normale_lissee_degc": 10.1
+        },
+        {
+            "horodate": "2022-03-18T14:00:00+00:00",
+            "temperature_realisee_lissee_degc": 11.4,
+            "temperature_normale_lissee_degc": 10.2
+        },
+        {
+            "horodate": "2022-03-18T14:30:00+00:00",
+            "temperature_realisee_lissee_degc": 11.5,
+            "temperature_normale_lissee_degc": 10.3
+        },
+        {
+            "horodate": "2022-03-18T15:00:00+00:00",
+            "temperature_realisee_lissee_degc": 11.7,
+            "temperature_normale_lissee_degc": 10.4
+        },
+        {
+            "horodate": "2022-03-18T15:30:00+00:00",
+            "temperature_realisee_lissee_degc": 11.5,
+            "temperature_normale_lissee_degc": 10.2
+        },
+        {
+            "horodate": "2022-03-18T16:00:00+00:00",
+            "temperature_realisee_lissee_degc": 11.4,
+            "temperature_normale_lissee_degc": 10.1
+        },
+        {
+            "horodate": "2022-03-18T16:30:00+00:00",
+            "temperature_realisee_lissee_degc": 11.2,
+            "temperature_normale_lissee_degc": 9.9
+        },
+        {
+            "horodate": "2022-03-18T17:00:00+00:00",
+            "temperature_realisee_lissee_degc": 11.1,
+            "temperature_normale_lissee_degc": 9.7
+        },
+        {
+            "horodate": "2022-03-18T17:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.9,
+            "temperature_normale_lissee_degc": 9.5
+        },
+        {
+            "horodate": "2022-03-18T18:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.8,
+            "temperature_normale_lissee_degc": 9.3
+        },
+        {
+            "horodate": "2022-03-18T18:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.7,
+            "temperature_normale_lissee_degc": 9.2
+        },
+        {
+            "horodate": "2022-03-18T19:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.5,
+            "temperature_normale_lissee_degc": 9.0
+        },
+        {
+            "horodate": "2022-03-18T19:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.4,
+            "temperature_normale_lissee_degc": 8.9
+        },
+        {
+            "horodate": "2022-03-18T20:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.3,
+            "temperature_normale_lissee_degc": 8.7
+        },
+        {
+            "horodate": "2022-03-18T20:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.1,
+            "temperature_normale_lissee_degc": 8.6
+        },
+        {
+            "horodate": "2022-03-18T21:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.1,
+            "temperature_normale_lissee_degc": 8.6
+        },
+        {
+            "horodate": "2022-03-18T21:30:00+00:00",
+            "temperature_realisee_lissee_degc": 10.0,
+            "temperature_normale_lissee_degc": 8.6
+        },
+        {
+            "horodate": "2022-03-18T22:00:00+00:00",
+            "temperature_realisee_lissee_degc": 10.0,
+            "temperature_normale_lissee_degc": 8.6
+        },
+        {
+            "horodate": "2022-03-18T22:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.9,
+            "temperature_normale_lissee_degc": 8.5
+        },
+        {
+            "horodate": "2022-03-18T23:00:00+00:00",
+            "temperature_realisee_lissee_degc": 9.9,
+            "temperature_normale_lissee_degc": 8.5
+        },
+        {
+            "horodate": "2022-03-18T23:30:00+00:00",
+            "temperature_realisee_lissee_degc": 9.9,
+            "temperature_normale_lissee_degc": 8.5
+        }
+    ]
+}
