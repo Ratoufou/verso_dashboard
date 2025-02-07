@@ -1,0 +1,18 @@
+{
+    "eval_years": [
+        2026
+    ],
+    "name": "v1",
+    "residual_model_config": {
+        "n_states": 80,
+        "isweekend": false
+    },
+    "regressor_model_config": {
+        "n_states": 20,
+        "isweekend": true
+    },
+    "nscenario": 10,
+    "output_path": "/frontend/PFC/outputs",
+    "save_files": true,
+    "sampling_period": "W"
+}

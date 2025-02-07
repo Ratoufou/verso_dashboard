@@ -69,3 +69,18 @@ CREATE TABLE IF NOT EXISTS installed_capacities (
     unit VARCHAR(5),
     PRIMARY KEY (capa_start, capa_end, source, country, capacities_type)
 );
+
+CREATE TABLE IF NOT EXISTS temperature (
+    temp_start TIMESTAMP,
+    temp_end TIMESTAMP,
+    source VARCHAR(20),
+    country CHAR(2), --ISO 3166-1 alpha-2
+    tenor VARCHAR(20),
+    tn NUMERIC(10, 2),
+    tr NUMERIC(10, 2),
+    trs NUMERIC(10, 2),
+    delta_t NUMERIC(10, 2),
+    delta_ts NUMERIC(10, 2),
+    unit VARCHAR(5),
+    PRIMARY KEY (temp_start, temp_end, source, country)
+);

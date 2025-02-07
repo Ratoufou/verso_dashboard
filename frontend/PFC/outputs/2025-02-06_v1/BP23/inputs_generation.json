@@ -1,0 +1,9 @@
+{
+    "calibration_path": "/frontend/PFC/outputs/2025-02-06_v1",
+    "scenario_file": "/frontend/vercast/Scénarios variables explicatives.xlsx",
+    "pv_scenario_id": "RTE - référence - BP23",
+    "eol_scenario_id": "RTE - référence - BP23",
+    "load_scenario_id": "RTE - référence - BP23",
+    "generation_id": "BP23",
+    "sampling_period": "W"
+}

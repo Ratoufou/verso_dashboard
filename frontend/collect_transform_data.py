@@ -10,13 +10,17 @@ DB_CONFIG = {
     'password' : 'versosql'
 }
 
-def execute_query(query, db_config=DB_CONFIG):
+def execute_query(query, timestamp=False, db_config=DB_CONFIG):
     conn = psycopg2.connect(**db_config) 
     cursor = conn.cursor()
     cursor.execute(query)
     results = cursor.fetchall()
-    return pd.DataFrame(data=results, 
-                        columns=[d.name for d in cursor.description])
+    df =  pd.DataFrame(data=results, 
+                       columns=[d.name for d in cursor.description])
+    if timestamp:
+        df.timestamp = pd.to_datetime(df.timestamp)
+        df.set_index('timestamp', inplace=True)
+    return df
 
 
 def get_spot_prices():

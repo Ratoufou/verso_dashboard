@@ -1,0 +1,11 @@
+{
+    "residual": [
+        "spot_price"
+    ],
+    "regressors": [
+        "deltaTS",
+        "load",
+        "pv_cf",
+        "eol_cf"
+    ]
+}

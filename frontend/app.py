@@ -1,9 +1,11 @@
 from collect_transform_data import *
 from figures import *
+from get_pfc import adjusted_pfc_from_scenario
 from utils import color_gradient
 from dash import Dash, html, dcc, callback, Input, Output, ctx
 import datetime as dt
 import dash_bootstrap_components as dbc
+from io import StringIO
 
 
 # Get data
@@ -29,6 +31,21 @@ gas_fig = plot_gas_fig(gas_df)
 tab_fig = products_evolution_fig(products_evolution_tab)
 
 
+# PFC
+prod_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='prod').Scénario.unique())
+load_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='conso').Scénario.unique())
+inputs = {}
+inputs['calibration_path'] = '/frontend/PFC/outputs/2025-02-06_v1'
+inputs['eex_path'] = '/frontend/vercast/EEX'
+inputs['historic_years'] = [2017, 2018, 2019]
+inputs['adjustment_date'] = '2024-09-18'
+inputs['scenario_file'] = '/frontend/vercast/Scénarios variables explicatives.xlsx'
+inputs["pv_scenario_id"] = "RTE - référence - BP23"
+inputs["eol_scenario_id"] = "RTE - référence - BP23"
+inputs["load_scenario_id"] = "RTE - référence - BP23"
+adj_PFC = adjusted_pfc_from_scenario(**inputs)
+
+
 # Other
 today = dt.date.today()
 indices_to_marks = {i: int(e) for i, e in enumerate(sorted(list(futures_df.delivery_year.unique())))}
@@ -43,191 +60,292 @@ app = Dash(__name__,
            external_scripts=[{'src': 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'},
                              {'src': 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js'}])
 
-app.layout = html.Div(id = 'dash_page', children = [
-    html.Div(className = 'horizontal_container', children = [
-        html.H1(
-            className = 'heading page_title',
-            children = f'Energy Markets Dashboard - {today.strftime(format="%d/%m/%Y")}'),
-        html.Img(
-            className = 'logo',
-            src = "assets/logo_bleu.png")
-    ]),
-    html.H2(
-        className = 'heading section_title',
-        children='Power'),
-    html.Div(className = 'horizontal_container', children = [
-        html.Div(className = 'figure_container', children = [
-            html.Div(className = 'horizontal_container menu', children = [
-                dcc.Input(
-                    id = 'start-date-spot',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = today - dt.timedelta(days=today.day-1)),
-                dcc.Input(
-                    id = 'end-date-spot',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = today + dt.timedelta(days=1)),
-                html.Button(
-                    'YTD',
-                    id = 'ytd-button-spot',
-                    className = 'menu_item'),
-                html.Button(
-                    'QTD',
-                    id = 'qtd-button-spot',
-                    className = 'menu_item'),
-                html.Button(
-                        'MTD',
-                    id = 'mtd-button-spot',
-                    className = 'menu_item'),
-                html.Button(
-                    'All',
-                    id = 'all-button-spot',
-                    className = 'menu_item'),
-                dbc.Select(
-                    id = 'sampling-dropdown-spot',
-                    className = 'menu_item',
-                    options = [{'label': sampling, 'value': sampling} for sampling in ['Hourly', 'Daily', 'Monthly']],
-                    value = 'Hourly'),
-                dbc.Select(
-                    id = 'tenor-dropdown-spot',
-                    className = 'menu_item',
-                    options = [{'label': tenor, 'value': tenor} for tenor in ['None', 'Month', 'Quarter', 'Year']],
-                    value = 'None'),
-                html.Button(
-                    'Download',
-                    id = 'download-button-spot',
-                    className = 'menu_item'),
-                dcc.Download(
-                    id = 'download-spot')
+app.layout = dcc.Tabs(className='custom-tabs', parent_className='custom-tabs-container', children = [
+    dcc.Tab(label='Markets', className='custom-tab', selected_className= 'custom-tab--selected', children = [
+        html.Div(id = 'dash_page', children = [
+            html.Div(className = 'horizontal_container', children = [
+                html.H1(
+                    className = 'heading page_title',
+                    children = f'Energy Markets Dashboard - {today.strftime(format="%d/%m/%Y")}'),
+                html.Img(
+                    className = 'logo',
+                    src = "assets/logo_bleu.png")
             ]),
-            dcc.Graph(
-                id = 'graph-spot',
-                figure = spot_fig)
-        ]),
-        html.Div(className = 'figure_container', children = [
-            html.Div(className = 'horizontal_container menu', children = [
-                dcc.Input(
-                    id = 'start-date-futures',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = futures_start),
-                dcc.Input(
-                    id = 'end-date-futures',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = futures_end),
-                html.Button(
-                    'YTD',
-                    id = 'ytd-button-futures',
-                    className = 'menu_item'),
-                html.Button(
-                    'QTD',
-                    id = 'qtd-button-futures',
-                    className = 'menu_item'),
-                html.Button(
-                    'MTD',
-                    id = 'mtd-button-futures',
-                    className = 'menu_item'),
-                html.Button(
-                    'All',
-                    id = 'all-button-futures',
-                    className = 'menu_item'),
-                dbc.Select(
-                    id = 'tenor-dropdown-futures',
-                    className = 'menu_item',
-                    options = [{'label': sampling, 'value': sampling} for sampling in ['Year', 'Quarter', 'Month']],
-                    value = 'Year'),
-                dbc.Select(
-                    id = 'peak-dropdown-futures',
-                    className = 'menu_item',
-                    options = [{'label': peak, 'value': peak} for peak in ['Base', 'Peak']],
-                    value = 'Base'),
-                dbc.Button(
-                    'Download',
-                    id = 'download-button-futures',
-                    className = 'menu_item'),
-                dcc.Download(
-                    id = 'download-futures')
+            html.H2(
+                className = 'heading section_title',
+                children='Power'),
+            html.Div(className = 'horizontal_container', children = [
+                html.Div(className = 'figure_container', children = [
+                    html.Div(className = 'horizontal_container menu', children = [
+                        dcc.Input(
+                            id = 'start-date-spot',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = today - dt.timedelta(days=today.day-1)),
+                        dcc.Input(
+                            id = 'end-date-spot',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = today + dt.timedelta(days=1)),
+                        html.Button(
+                            'YTD',
+                            id = 'ytd-button-spot',
+                            className = 'menu_item'),
+                        html.Button(
+                            'QTD',
+                            id = 'qtd-button-spot',
+                            className = 'menu_item'),
+                        html.Button(
+                                'MTD',
+                            id = 'mtd-button-spot',
+                            className = 'menu_item'),
+                        html.Button(
+                            'All',
+                            id = 'all-button-spot',
+                            className = 'menu_item'),
+                        dbc.Select(
+                            id = 'sampling-dropdown-spot',
+                            className = 'menu_item',
+                            options = [{'label': sampling, 'value': sampling} for sampling in ['Hourly', 'Daily', 'Monthly']],
+                            value = 'Hourly'),
+                        dbc.Select(
+                            id = 'tenor-dropdown-spot',
+                            className = 'menu_item',
+                            options = [{'label': tenor, 'value': tenor} for tenor in ['None', 'Month', 'Quarter', 'Year']],
+                            value = 'None'),
+                        html.Button(
+                            'Download',
+                            id = 'download-button-spot',
+                            className = 'menu_item'),
+                        dcc.Download(
+                            id = 'download-spot')
+                    ]),
+                    dcc.Store(
+                        id = 'data-spot',
+                        data = spot_fig.to_dict()),
+                    dcc.Graph(
+                        id = 'graph-spot',
+                        figure = spot_fig)
+                ]),
+                html.Div(className = 'figure_container', children = [
+                    html.Div(className = 'horizontal_container menu', children = [
+                        dcc.Input(
+                            id = 'start-date-futures',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = futures_start),
+                        dcc.Input(
+                            id = 'end-date-futures',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = futures_end),
+                        html.Button(
+                            'YTD',
+                            id = 'ytd-button-futures',
+                            className = 'menu_item'),
+                        html.Button(
+                            'QTD',
+                            id = 'qtd-button-futures',
+                            className = 'menu_item'),
+                        html.Button(
+                            'MTD',
+                            id = 'mtd-button-futures',
+                            className = 'menu_item'),
+                        html.Button(
+                            'All',
+                            id = 'all-button-futures',
+                            className = 'menu_item'),
+                        dbc.Select(
+                            id = 'tenor-dropdown-futures',
+                            className = 'menu_item',
+                            options = [{'label': sampling, 'value': sampling} for sampling in ['Year', 'Quarter', 'Month']],
+                            value = 'Year'),
+                        dbc.Select(
+                            id = 'peak-dropdown-futures',
+                            className = 'menu_item',
+                            options = [{'label': peak, 'value': peak} for peak in ['Base', 'Peak']],
+                            value = 'Base'),
+                        dbc.Button(
+                            'Download',
+                            id = 'download-button-futures',
+                            className = 'menu_item'),
+                        dcc.Download(
+                            id = 'download-futures')
+                    ]),
+                    dcc.Store(
+                        id = 'data-futures',
+                        data = futures_fig.to_dict()),
+                    dcc.Graph(
+                        id = 'graph-futures',
+                        figure = futures_fig), 
+                    dcc.RangeSlider(
+                        id='yearslider',
+                        min=0, 
+                        max=len(indices_to_marks)-1, 
+                        marks={k: (v if v%5 == 0 else '') for k, v in indices_to_marks.items()},
+                        value=[marks_to_indices[today.year]+1, marks_to_indices[today.year]+3], 
+                        updatemode='mouseup',
+                        step=None,
+                        allowCross=False),            
+                ]),
             ]),
-            dcc.Graph(
-                id = 'graph-futures',
-                figure = futures_fig), 
-            dcc.RangeSlider(
-                id='yearslider',
-                min=0, 
-                max=len(indices_to_marks)-1, 
-                marks={k: (v if v%5 == 0 else '') for k, v in indices_to_marks.items()},
-                value=[marks_to_indices[today.year]+1, marks_to_indices[today.year]+3], 
-                updatemode='mouseup',
-                step=None,
-                allowCross=False),            
-        ]),
-    ]),
-    html.H3('Futures Prices and Trends**'),
-    html.Div(className = 'tab_container', children = [
-        dcc.Graph(
-            id = 'graph-tab',
-            figure = tab_fig)
-    ]),
-    html.Footer(
-        '* For futures prices, the value used is the average of all prices at which a trade has taken place (without weighting).',
-        className = 'footer'
-    ),
-    html.Footer(
-         '** For prices and trends, average quotations for the current and previous days are taken into account.',
-        className = 'footer'
-    ),
-    html.H2(
-        className = 'heading section_title',
-        children = 'Gas'),
-    html.Div(className = 'horizontal_container', children = [
-        html.Div(className = 'figure_container', children = [
-            html.Div(className = 'horizontal_container menu', children = [
-                dcc.Input(
-                    id = 'start-date-gas',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = today - dt.timedelta(days=today.day-1)),
-                dcc.Input(
-                    id = 'end-date-gas',
-                    className = 'menu_item',
-                    type = 'date',
-                    value = today),
-                html.Button(
-                    'YTD',
-                    id = 'ytd-button-gas',
-                    className = 'menu_item'),
-                html.Button(
-                    'QTD',
-                    id = 'qtd-button-gas',
-                    className = 'menu_item'),
-                html.Button(
-                    'MTD',
-                    id = 'mtd-button-gas',
-                    className = 'menu_item'),
-                html.Button(
-                    'All',
-                    id = 'all-button-gas',
-                    className = 'menu_item'),
-                html.Button(
-                    'Download',
-                    id = 'download-button-gas',
-                    className = 'menu_item'),
-                dcc.Download(
-                    id = 'download-gas')
+            html.H3('Futures Prices and Trends**'),
+            html.Div(className = 'tab_container', children = [
+                dcc.Graph(
+                    id = 'graph-tab',
+                    figure = tab_fig)
             ]),
-            dcc.Graph(
-                id = 'graph-gas',
-                figure = gas_fig)
-        ]) 
+            html.Footer(
+                '* For futures prices, the value used is the average of all prices at which a trade has taken place (without weighting).',
+                className = 'footer'
+            ),
+            html.Footer(
+                '** For prices and trends, average quotations for the current and previous days are taken into account.',
+                className = 'footer'
+            ),
+            html.H2(
+                className = 'heading section_title',
+                children = 'Gas'),
+            html.Div(className = 'horizontal_container', children = [
+                html.Div(className = 'figure_container', children = [
+                    html.Div(className = 'horizontal_container menu', children = [
+                        dcc.Input(
+                            id = 'start-date-gas',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = today - dt.timedelta(days=today.day-1)),
+                        dcc.Input(
+                            id = 'end-date-gas',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = today),
+                        html.Button(
+                            'YTD',
+                            id = 'ytd-button-gas',
+                            className = 'menu_item'),
+                        html.Button(
+                            'QTD',
+                            id = 'qtd-button-gas',
+                            className = 'menu_item'),
+                        html.Button(
+                            'MTD',
+                            id = 'mtd-button-gas',
+                            className = 'menu_item'),
+                        html.Button(
+                            'All',
+                            id = 'all-button-gas',
+                            className = 'menu_item'),
+                        html.Button(
+                            'Download',
+                            id = 'download-button-gas',
+                            className = 'menu_item'),
+                        dcc.Download(
+                            id = 'download-gas')
+                    ]),
+                    dcc.Store(
+                        id = 'data-gas',
+                        data = gas_fig.to_dict()
+                    ),
+                    dcc.Graph(
+                        id = 'graph-gas',
+                        figure = gas_fig)
+                ]) 
+            ]),
+            html.Button(
+                'PDF',
+                id = 'pdf-button',
+                className = 'menu_item',
+                n_clicks = 0)
+        ])
     ]),
-    html.Button(
-        'PDF',
-        id = 'pdf-button',
-        className = 'menu_item',
-        n_clicks = 0),
+    dcc.Tab(label='PFC', className='custom-tab', selected_className= 'custom-tab--selected', children = [
+        html.Div(id = 'dash_page_pfc', children = [
+            html.Div(className = 'horizontal_container', children = [
+                html.H1(
+                    className = 'heading page_title',
+                    children = f'PFC Dashboard - {today.strftime(format="%d/%m/%Y")}'),
+                html.Img(
+                    className = 'logo',
+                    src = "assets/logo_bleu.png")
+            ]),
+            html.Div(className = 'horizontal_container', children = [
+                html.Div(id = 'pfc_figure_container', className = 'figure_container', children = [
+                    html.Div(className = 'horizontal_container menu', children = [
+                        dcc.Input(
+                            id = 'start-date-pfc',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = adj_PFC.index[0].date()),
+                        dcc.Input(
+                            id = 'end-date-pfc',
+                            className = 'menu_item',
+                            type = 'date',
+                            value = adj_PFC.index[-1].date()),
+                        dbc.Select(
+                            id = 'pv-dropdown',
+                            className = 'menu_item',
+                            options = [{'label': f'PV: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
+                            value = inputs["pv_scenario_id"]),
+                        dbc.Select(
+                            id = 'eol-dropdown',
+                            className = 'menu_item',
+                            options = [{'label': f'Wind: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
+                            value = inputs["eol_scenario_id"]),
+                        dbc.Select(
+                            id = 'load-dropdown',
+                            className = 'menu_item',
+                            options = [{'label': f'Load: {scenario}', 'value': scenario} for scenario in load_scenarios_ls],
+                            value = inputs["load_scenario_id"])
+                    ]),
+                    dcc.Store(
+                        id = 'adj-pfc',
+                        data = adj_PFC.to_json(orient="table")),
+                    dcc.Store(  
+                        id = 'data-pfc',
+                        data = plot_pfc_fig(adj_PFC).to_dict()),
+                    dcc.Graph(
+                        id = 'graph-pfc',
+                        figure = plot_pfc_fig(adj_PFC))
+                ]) 
+            ])
+        ])
+    ])
 ])
+
+
+@callback(
+    Output('graph-pfc', 'figure'),
+    Output('data-pfc', 'data'),
+    Input('start-date-pfc', 'value'),
+    Input('end-date-pfc', 'value'),
+    Input('adj-pfc', 'data'),
+    Input('data-pfc', 'data'))
+def update_pfc_fig(start_date, end_date, adj_pfc_json, pfc_fig):
+    adf_PFC = pd.read_json(StringIO(adj_pfc_json), orient='table')
+    try:
+        start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
+        filtered_df = adf_PFC[start:end]
+        pfc_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = (filtered_df.index[0], filtered_df.index[-1])
+        pfc_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df.mean(axis=1).min()-10, filtered_df.mean(axis=1).max()+10)
+    except IndexError:
+        pass
+    return pfc_fig, pfc_fig
+
+@callback(
+    Output('adj-pfc', 'data'),
+    Output('graph-pfc', 'figure', allow_duplicate=True),
+    Output('data-pfc', 'data', allow_duplicate=True),
+    Input('pv-dropdown', 'value'),
+    Input('eol-dropdown', 'value'),
+    Input('load-dropdown', 'value'),
+    prevent_initial_call=True)
+def compute_adj_pfc(pv_scenario, eol_scenario, load_scenario):
+    inputs['pv_scenario_id'] = pv_scenario
+    inputs['eol_scenario_id'] = eol_scenario
+    inputs['load_scenario_id'] = load_scenario
+    adj_PFC = adjusted_pfc_from_scenario(**inputs)
+    pfc_fig = plot_pfc_fig(adj_PFC).to_dict()
+    return adj_PFC.to_json(orient="table"), pfc_fig, pfc_fig
 
 @callback(
     Output('download-spot', 'data'),
@@ -267,29 +385,31 @@ def update_spot_picker_range(ytd, qtd, mtd, all, start_date, end_date):
    
 @callback(
     Output('graph-spot', 'figure'),
+    Output('data-spot', 'data'),
     Input('start-date-spot', 'value'),
     Input('end-date-spot', 'value'),
     Input('sampling-dropdown-spot', 'value'),
-    Input('tenor-dropdown-spot', 'value'))
-def update_spot_figure(start_date, end_date, sampling, tenor):
+    Input('tenor-dropdown-spot', 'value'),
+    Input('data-spot', 'data'))
+def update_spot_figure(start_date, end_date, sampling, tenor, spot_fig):
     try:
         start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
         filtered_df = spot_df_dict[sampling][start:end]
-        spot_fig.update_layout(xaxis=dict(range=[filtered_df.index[0], filtered_df.index[-1]]))
-        spot_fig.update_layout(yaxis=dict(range=[filtered_df['price'].min()-10, filtered_df['price'].max()+10]))
+        spot_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = (filtered_df.index[0], filtered_df.index[-1])
+        spot_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df['price'].min()-10, filtered_df['price'].max()+10)
         if tenor == 'None':
             subtitle = ''
         else:
             subtitle = f'(with {tenor} Futures details*)'
-        spot_fig.update_layout(title=f'{sampling} FR Spot Prices {subtitle}')
-        for trace in spot_fig.data:
-            if (trace.name == sampling) or (trace.legendgroup == tenor):
-                trace.visible = True
+        spot_fig['layout']['title'] = f'{sampling} FR Spot Prices {subtitle}'
+        for trace in spot_fig['data']:
+            if (trace.get('name', '') == sampling) or (trace.get('legendgroup', '') == tenor):
+                trace['visible'] = True
             else:
-                trace.visible = False
-    except IndexError: 
+                trace['visible'] = False
+    except IndexError:
         pass
-    return spot_fig
+    return spot_fig, spot_fig
 
 @callback(
     Output('download-futures', 'data'),
@@ -340,12 +460,14 @@ def update_futures_picker_range(ytd, qtd, mtd, all, start_date, end_date):
     
 @callback(
     Output('graph-futures', 'figure'),
+    Output('data-futures', 'data'),
     Input('tenor-dropdown-futures', 'value'),
     Input('peak-dropdown-futures', 'value'),
     Input('start-date-futures', 'value'),
     Input('end-date-futures', 'value'),
-    Input('yearslider', 'value'))
-def update_futures_fig(tenor, peak, start_date, end_date, value):
+    Input('yearslider', 'value'),
+    Input('data-futures', 'data'))
+def update_futures_fig(tenor, peak, start_date, end_date, value, futures_fig):
     try:
         years = sorted([indices_to_marks[i] for i in range(value[0], value[1]+1)])
         filtered_df = futures_df[(futures_df.tenor == tenor) & 
@@ -358,18 +480,18 @@ def update_futures_fig(tenor, peak, start_date, end_date, value):
         color_grad = color_gradient((0, 87, 184), (151, 215, 0), n)
         colors = {products[i]: color_grad[i] for i in range(n)}
         
-        futures_fig.update_layout(xaxis=dict(range=[filtered_df.trading_date.min(), filtered_df.trading_date.max()]))
-        futures_fig.update_layout(yaxis=dict(range=[filtered_df.settlement_price.min()-10, filtered_df.settlement_price.max()+10]))
-        futures_fig.update_layout(title=f'{peak} {tenor} Futures Prices Trend')
-        for trace in futures_fig.data:
-            if (trace.meta['tenor'] == tenor) & (trace.meta['type'] == peak) & ((trace.meta['year'], trace.meta['product_index']) in products):
-                trace.visible = True
-                trace.line.color = f"rgb{colors[(trace.meta['year'], trace.meta['product_index'])]}"
+        futures_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = (filtered_df.trading_date.min(), filtered_df.trading_date.max())
+        futures_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df.settlement_price.min()-10, filtered_df.settlement_price.max()+10)
+        futures_fig['layout']['title'] = f'{peak} {tenor} Futures Prices Trend'
+        for trace in futures_fig['data']:
+            if (trace.get('meta', {}).get('tenor', '') == tenor) & (trace.get('meta', {}).get('type', '') == peak) & ((trace.get('meta', {}).get('year', ''), trace.get('meta', {}).get('product_index', '')) in products):
+                trace['visible'] = True
+                trace.setdefault('line', {})['color'] = f"rgb{colors[(trace.get('meta', {}).get('year', ''), trace.get('meta', {}).get('product_index', ''))]}"
             else: 
-                trace.visible = False
+                trace['visible'] = False
     except IndexError:
         pass
-    return futures_fig
+    return futures_fig, futures_fig
 
 @callback(
     Output('download-gas', 'data'),
@@ -408,16 +530,18 @@ def update_gas_picker_range(ytd, qtd, mtd, all, start_date, end_date):
     
 @callback(
     Output('graph-gas', 'figure'),
+    Output('data-gas', 'data'),
     Input('start-date-gas', 'value'),
-    Input('end-date-gas', 'value'))
-def update_gas_figure(start_date, end_date):
+    Input('end-date-gas', 'value'),
+    Input('data-gas', 'data'))
+def update_gas_figure(start_date, end_date, gas_fig):
     try:
         start, end = dt.date.fromisoformat(start_date), dt.date.fromisoformat(end_date)
         filtered_df = gas_df[start:end]
-        gas_fig.update_layout(xaxis=dict(range=[filtered_df.index[0], filtered_df.index[-1]]))
-        gas_fig.update_layout(yaxis=dict(range=[filtered_df['last_price'].min(), filtered_df['last_price'].max()+10]))
+        gas_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = [filtered_df.index[0].strftime('%Y-%m-%d'), filtered_df.index[-1].strftime('%Y-%m-%d')]
+        gas_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df['last_price'].min(), filtered_df['last_price'].max()+10)
     except IndexError:
         pass
-    return gas_fig    
+    return gas_fig, gas_fig    
 
 app.run(host='0.0.0.0')

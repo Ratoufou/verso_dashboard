@@ -47,7 +47,30 @@
     }
 }
 
-#dash_page {
+.custom-tabs{
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.custom-tab{
+    width: auto !important;
+    padding: 0.8rem !important;
+    font-size: 1.4rem;
+    font-family: 'Open Sans';
+    border-radius: 0.7rem 0.7rem 0rem 0rem;
+    background-color: rgba(151, 215, 0, 0.2) !important;
+    border: none !important;
+}
+
+.custom-tab--selected{
+    background-color: white !important;
+    border-right: 1px solid #e6e6e6 !important;
+    border-left: 1px solid #e6e6e6 !important;
+    border-top: 3px solid #97D700 !important;
+    border-bottom: none !important;
+    box-shadow: 1px 1px 0px white;
+}
+
+#dash_page, #dash_page_pfc {
     font-family: 'Open Sans';
     width: 100%;
     display: flex;
@@ -105,6 +128,10 @@ h3{
 .figure_container {
     width: 50%;
     align-self: flex-start;
+}
+
+#pfc_figure_container {
+    width: 100%;
 }
 
 .menu {

@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import pandas as pd
 
 
 def products_evolution_fig(tab):
@@ -106,6 +107,29 @@ def plot_gas_fig(gas_df):
     update_layout(gas_fig, 'Gas Spot Prices')
     gas_fig.update_layout(showlegend=False)
     return gas_fig
+
+
+def plot_pfc_fig(adj_PFC):
+    summary_df = pd.DataFrame({
+        "Mean": adj_PFC.mean(axis=1),
+        "Lower": adj_PFC.quantile(0.25, axis=1),
+        "Upper": adj_PFC.quantile(0.75, axis=1)
+    })
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=summary_df.index,
+                             y=summary_df.Mean,
+                             mode="lines",
+                             name="Mean",
+                             line=dict(color="blue")))
+    fig.add_trace(go.Scatter(x=summary_df.index.tolist() + summary_df.index.tolist()[::-1],
+                             y=summary_df.Lower.tolist() + summary_df.Upper.tolist()[::-1],
+                             fill="toself",
+                             fillcolor="rgba(0, 0, 255, 0.2)",
+                             line=dict(color="rgba(255, 255, 255, 0)"),
+                             hoverinfo="skip",
+                             name="Envelope (0.25-0.75)"))
+    update_layout(fig, 'PFC')
+    return fig
 
 
 def update_layout(fig, title):
