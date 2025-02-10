@@ -382,7 +382,7 @@ def parse_quotations(eex, delivery_years, trading_date):
     return desired_quot.groupby(['delivery_year', 'tenor', 'type', 'product_index'])[['settlement_price']].mean()
 
 
-def get_adjusted_monthly_quotation(eex, trading_date, years, M_Q_hist, hourly_timestamp):
+def get_adjusted_monthly_quotation(eex, trading_date, years, M_Q_hist, hourly_timestamp, return_quot=False):
     # Get quotations for given years on the specified trading date
     quot = parse_quotations(eex, years, trading_date)
     # Re-index quotations (and historical ones to add the year level) with pd.NA for those not available
@@ -426,7 +426,10 @@ def get_adjusted_monthly_quotation(eex, trading_date, years, M_Q_hist, hourly_ti
             nb_hour.xs('offpeak', level='type'))
     offpeak_month_quot.index = pd.MultiIndex.from_tuples([(y, 'offpeak', product_index) for y, product_index in offpeak_month_quot.index], 
                                                         names=adjusted_month_quot.index.names)
-    return pd.concat([adjusted_month_quot, offpeak_month_quot])
+    if return_quot:
+        return pd.concat([adjusted_month_quot, offpeak_month_quot]), quot
+    else:
+        return pd.concat([adjusted_month_quot, offpeak_month_quot]), None
 
 
 def adjust_PFC_to_month_quot(norm_PFC, month_quot):

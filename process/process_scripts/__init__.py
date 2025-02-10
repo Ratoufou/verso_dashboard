@@ -4,3 +4,4 @@ from .KPLER_DayAhead_Gas_EEX import KPLER_DayAhead_Gas_EEX_process
 from .RTE_Consumption import RTE_Consumption_process
 from .RTE_Production import RTE_Production_process
 from .RTE_Capacities import RTE_Capacities_process
+from .RTE_GenerationForecast import RTE_GenerationForecast_process

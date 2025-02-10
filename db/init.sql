@@ -84,3 +84,16 @@ CREATE TABLE IF NOT EXISTS temperature (
     unit VARCHAR(5),
     PRIMARY KEY (temp_start, temp_end, source, country)
 );
+
+CREATE TABLE IF NOT EXISTS generation_forecast (
+    prod_start TIMESTAMP,
+    prod_end TIMESTAMP,
+    source VARCHAR(20),
+    country CHAR(2), --ISO 3166-1 alpha-2
+    forecast_type VARCHAR(20),
+    production_type VARCHAR(50),
+    tenor VARCHAR(20),
+    quantity NUMERIC(10, 2),
+    unit VARCHAR(5),
+    PRIMARY KEY (prod_start, prod_end, source, country, forecast_type, production_type)
+);

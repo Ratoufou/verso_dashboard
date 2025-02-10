@@ -105,7 +105,7 @@ def generate_normalized_pfc(calibration_path, scenario_file, pv_scenario_id, eol
     return norm_PFC
 
 
-def adjust_pfc(eex_path, historic_years, adjustment_date, norm_PFC=None, calibration_path=None, generation_id=None, sampling_period='W', save_files=False):
+def adjust_pfc(eex_path, historic_years, adjustment_date, norm_PFC=None, calibration_path=None, generation_id=None, sampling_period='W', save_files=False, return_quot=False):
     inputs = locals()
 
     # Chargement PFC normalisées
@@ -125,7 +125,7 @@ def adjust_pfc(eex_path, historic_years, adjustment_date, norm_PFC=None, calibra
     # Ajustement des PFC aux cotations disponible
     adjustment_date = date.fromisoformat(adjustment_date)
     quotations = process_eex_df(pd.read_excel(os.path.join(eex_path, f'{adjustment_date.year}.xlsx')))
-    M_adjusted = get_adjusted_monthly_quotation(eex=quotations, trading_date=adjustment_date, years=eval_years, M_Q_hist=M_Q_hist, hourly_timestamp=hourly_timestamp)
+    M_adjusted, quot = get_adjusted_monthly_quotation(eex=quotations, trading_date=adjustment_date, years=eval_years, M_Q_hist=M_Q_hist, hourly_timestamp=hourly_timestamp, return_quot=return_quot)
     adj_PFC = adjust_PFC_to_month_quot(norm_PFC, M_adjusted)
     adj_PFC = smoothing(adj_PFC, sampling_period=sampling_period)
     if save_files:
@@ -139,4 +139,7 @@ def adjust_pfc(eex_path, historic_years, adjustment_date, norm_PFC=None, calibra
                 inputs.pop('save_files', None)
                 json.dump(inputs, f, ensure_ascii=False, indent=4)
     
-    return adj_PFC
+    if return_quot:
+        return adj_PFC, quot
+    else:
+        return adj_PFC, None
