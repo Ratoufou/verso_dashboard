@@ -3,3 +3,4 @@ isodate
 psycopg2-binary
 pandas
 tqdm
+openpyxl

@@ -23,7 +23,7 @@ def ENTSOE_DayAhead_process(date, country, dir, DB_CONFIG):
     ns = root.nsmap
     ts_elem = root.find('TimeSeries', namespaces=ns)
     country = EIC_CODES[ts_elem.find('in_Domain.mRID', namespaces=ns).text]
-    currency = ts_elem.find('currency_Unit.name', namespaces=ns).text
+    unit = f"{ts_elem.find('currency_Unit.name', namespaces=ns).text}/{ts_elem.find('price_Measure_Unit.name', namespaces=ns).text}"
     period_elem = ts_elem.find('Period', namespaces=ns)
     time_inteval_elem = period_elem.find('timeInterval', namespaces=ns)
     start = pd.Timestamp(time_inteval_elem.find('start', namespaces=ns).text)
@@ -43,7 +43,7 @@ def ENTSOE_DayAhead_process(date, country, dir, DB_CONFIG):
     for timestamp, row in df.iterrows():
         cursor.execute(
             ('INSERT INTO elec_day_ahead_market ' 
-             '(delivery_start, delivery_end, source, country, tenor, price, currency) ' 
+             '(delivery_start, delivery_end, source, country, tenor, price, unit) ' 
              'VALUES (%s, %s, %s, %s, %s, %s, %s) '
              'ON CONFLICT (delivery_start, delivery_end, source, country) DO NOTHING'),
 
@@ -53,7 +53,7 @@ def ENTSOE_DayAhead_process(date, country, dir, DB_CONFIG):
              country, 
              duration_isoformat(resolution), 
              round(float(row['price']), 2), 
-             currency)
+             unit)
         )
 
     conn.commit()

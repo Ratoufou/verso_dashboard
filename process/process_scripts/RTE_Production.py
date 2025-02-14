@@ -11,7 +11,6 @@ def RTE_Production_process(date, country, dir, DB_CONFIG):
     path = os.path.join(dir, file)
 
     if not(os.path.exists(path)):
-        print(path)
         return None 
     
     with open(path, 'r') as f:

@@ -27,18 +27,18 @@ def KPLER_DayAhead_Gas_EEX_process(date, country, dir, DB_CONFIG):
 
         cursor.execute(
             ('INSERT INTO gas_day_ahead_market ' 
-             '(trading_date, delivery_start, delivery_end, source, country, tenor, last_price, currency) ' 
+             '(trading_date, delivery_start, delivery_end, source, country, tenor, last_price, unit) ' 
              'VALUES (%s, %s, %s, %s, %s, %s, %s, %s) '
              'ON CONFLICT (trading_date, delivery_start, delivery_end, source, country) DO NOTHING'),
 
             (row['trading_date'], 
              row['delivery_start'], 
              row['delivery_end'], 
-             'EEX', 
+             'KPLER', 
              country, 
              row['tenor'], 
              round(row['price'], 2), 
-             'EUR')
+             'EUR/MWH')
         )
 
     conn.commit()

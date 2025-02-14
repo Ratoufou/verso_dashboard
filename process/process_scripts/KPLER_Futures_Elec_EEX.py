@@ -24,19 +24,19 @@ def KPLER_Futures_Elec_EEX_process(date, country, dir, DB_CONFIG):
 
             cursor.execute(
                 ('INSERT INTO elec_futures_market ' 
-                 '(trading_date, delivery_start, delivery_end, source, country, peak, tenor, settlement_price, currency) ' 
+                 '(trading_date, delivery_start, delivery_end, source, country, peak, tenor, settlement_price, unit) ' 
                  'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) '
                  'ON CONFLICT (trading_date, delivery_start, delivery_end, source, country, peak) DO NOTHING'),
 
                 (row['trading_date'], 
                  row['delivery_start'], 
                  row['delivery_end'], 
-                 'EEX', 
+                 'KPLER', 
                  country, 
                  type == 'Peak', 
                  row['tenor'], 
                  round(row['settlement_price'], 2), 
-                 'EUR')
+                 'EUR/MWH')
             )
 
         conn.commit()

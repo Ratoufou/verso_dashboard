@@ -5,3 +5,6 @@ from .RTE_Consumption import RTE_Consumption_process
 from .RTE_Production import RTE_Production_process
 from .RTE_Capacities import RTE_Capacities_process
 from .RTE_GenerationForecast import RTE_GenerationForecast_process
+from .RTE_Imbalance import RTE_Imbalance_process
+from .EEX_Futures_Elec import EEX_Futures_Elec_process
+from .ENEDIS_Temperature import ENEDIS_Temperature_process

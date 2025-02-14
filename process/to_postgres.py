@@ -23,8 +23,11 @@ process_dict = {
     # 'KPLER/DayAhead/Gas/EEX' : process_scripts.KPLER_DayAhead_Gas_EEX_process,
     # 'RTE/Consumption' : process_scripts.RTE_Consumption_process,
     # 'RTE/Production' : process_scripts.RTE_Production_process,
-    # 'RTE/Capacities' : process_scripts.RTE_Capacities_process
-    'RTE/GenerationForecast' : process_scripts.RTE_GenerationForecast_process
+    # 'RTE/Capacities' : process_scripts.RTE_Capacities_process,
+    # 'RTE/GenerationForecast' : process_scripts.RTE_GenerationForecast_process,
+    # 'RTE/Imbalance' : process_scripts.RTE_Imbalance_process,
+    # 'EEX/Power/Futures' : process_scripts.EEX_Futures_Elec_process,
+    'ENEDIS/Temperature' : process_scripts.ENEDIS_Temperature_process
 }
 
 for date in tqdm(pd.date_range(start=args.start, end=args.end, freq='D', inclusive='both').date):
