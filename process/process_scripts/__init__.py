@@ -6,5 +6,8 @@ from .RTE_Production import RTE_Production_process
 from .RTE_Capacities import RTE_Capacities_process
 from .RTE_GenerationForecast import RTE_GenerationForecast_process
 from .RTE_Imbalance import RTE_Imbalance_process
+from .RTE_BalancingCapacity import RTE_BalancingCapacity_process
 from .EEX_Futures_Elec import EEX_Futures_Elec_process
 from .ENEDIS_Temperature import ENEDIS_Temperature_process
+from .ODRE_Capacities import ODRE_Capacities_process
+from .ODRE_Eco2mix import ODRE_Eco2mix_process

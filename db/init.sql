@@ -22,6 +22,18 @@ CREATE TABLE IF NOT EXISTS elec_day_ahead_market (
     PRIMARY KEY (delivery_start, delivery_end, source, country)
 );
 
+CREATE TABLE IF NOT EXISTS elec_reserve_market (
+    reserve_start TIMESTAMP,
+    reserve_end TIMESTAMP,
+    source VARCHAR(20),
+    country CHAR(2), --ISO 3166-1 alpha-2
+    reserve_type VARCHAR(10),
+    tenor VARCHAR(20),
+    price NUMERIC(10, 2),
+    unit VARCHAR(10),
+    PRIMARY KEY (reserve_start, reserve_end, source, country, reserve_type)
+);
+
 CREATE TABLE IF NOT EXISTS gas_day_ahead_market (
     trading_date DATE,
     delivery_start DATE,
@@ -43,7 +55,8 @@ CREATE TABLE IF NOT EXISTS consumption (
     curve_type VARCHAR(30),
     quantity NUMERIC(10, 2),
     unit VARCHAR(5),
-    PRIMARY KEY (cons_start, cons_end, source, country, curve_type)
+    processing VARCHAR(50),
+    PRIMARY KEY (cons_start, cons_end, source, country, curve_type, processing)
 );
 
 CREATE TABLE IF NOT EXISTS production_per_type (
@@ -55,7 +68,20 @@ CREATE TABLE IF NOT EXISTS production_per_type (
     production_type VARCHAR(50),
     quantity NUMERIC(10, 2),
     unit VARCHAR(5),
-    PRIMARY KEY (prod_start, prod_end, source, country, production_type)
+    processing VARCHAR(50),
+    PRIMARY KEY (prod_start, prod_end, source, country, production_type, processing)
+);
+
+CREATE TABLE IF NOT EXISTS capacity_factor_per_type (
+    cf_start TIMESTAMP,
+    cf_end TIMESTAMP,
+    source VARCHAR(20),
+    country CHAR(2),
+    tenor VARCHAR(20),
+    cf_type VARCHAR(50),
+    capacity_factor FLOAT,
+    processing VARCHAR(50),
+    PRIMARY KEY (cf_start, cf_end, source, country, cf_type, processing)
 );
 
 CREATE TABLE IF NOT EXISTS installed_capacities (

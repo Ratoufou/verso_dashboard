@@ -4,6 +4,7 @@ import pandas as pd
 import json
 from isodate import duration_isoformat
 
+
 def RTE_Consumption_process(date, country, dir, DB_CONFIG):
 
     file = f'{date}_RTE_Cons_{country}.json'

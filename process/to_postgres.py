@@ -17,7 +17,7 @@ DB_CONFIG = {
     'password' : 'versosql'
 }
 
-process_dict = {
+process_dict_daily = {
     # 'ENTSOE/DayAhead' : process_scripts.ENTSOE_DayAhead_process,
     # 'KPLER/Futures/Elec/EEX' : process_scripts.KPLER_Futures_Elec_EEX_process,
     # 'KPLER/DayAhead/Gas/EEX' : process_scripts.KPLER_DayAhead_Gas_EEX_process,
@@ -26,12 +26,25 @@ process_dict = {
     # 'RTE/Capacities' : process_scripts.RTE_Capacities_process,
     # 'RTE/GenerationForecast' : process_scripts.RTE_GenerationForecast_process,
     # 'RTE/Imbalance' : process_scripts.RTE_Imbalance_process,
+    # 'RTE/BalancingCapacity' : process_scripts.RTE_BalancingCapacity_process,
     # 'EEX/Power/Futures' : process_scripts.EEX_Futures_Elec_process,
-    'ENEDIS/Temperature' : process_scripts.ENEDIS_Temperature_process
+    # 'ENEDIS/Temperature' : process_scripts.ENEDIS_Temperature_process, 
+    'ODRE/Eco2mix' : process_scripts.ODRE_Eco2mix_process
 }
 
-for date in tqdm(pd.date_range(start=args.start, end=args.end, freq='D', inclusive='both').date):
+process_dict_yearly = {
+    # 'ODRE/Capacities' : process_scripts.ODRE_Capacities_process
+}
+
+date_range = pd.date_range(start=args.start, end=args.end, freq='D', inclusive='both')
+
+for date in tqdm(date_range.date):
     date_str = date.strftime(format='%Y%m%d')
-    for dir, func in process_dict.items():
+    for dir, func in process_dict_daily.items():
         for country in os.listdir(os.path.join(args.data_path, dir)):
             func(date_str, country, os.path.join(args.data_path, dir, country), DB_CONFIG)
+
+for year in tqdm(date_range.year.unique()):
+    for dir, func in process_dict_yearly.items():
+        for country in os.listdir(os.path.join(args.data_path, dir)):
+            func(year, country, os.path.join(args.data_path, dir, country), DB_CONFIG)

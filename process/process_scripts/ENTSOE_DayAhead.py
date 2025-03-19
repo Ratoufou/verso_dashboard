@@ -30,7 +30,7 @@ def ENTSOE_DayAhead_process(date, country, dir, DB_CONFIG):
     end = pd.Timestamp(time_inteval_elem.find('end', namespaces=ns).text)
     resolution = parse_duration(period_elem.find('resolution', namespaces=ns).text)
     date_range = pd.date_range(start=start, end=end, freq=resolution, inclusive='left').tz_localize(None)
-    val = [0 for _ in range(len(date_range))]
+    val = [pd.NA for _ in range(len(date_range))]
     for pt in period_elem.findall('Point', namespaces=ns):
         pos = int(pt.find('position', namespaces=ns).text)
         price = float(pt.find('price.amount', namespaces=ns).text)
