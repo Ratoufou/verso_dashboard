@@ -11,7 +11,7 @@ from io import StringIO
 # Get data
 spot_df = get_spot_prices()
 futures_df = get_futures_prices()
-gas_df = filter_gas_df(get_gas_prices())
+gas_df = get_gas_prices()
 
 
 # Preliminary calculations
@@ -32,22 +32,22 @@ tab_fig = products_evolution_fig(products_evolution_tab)
 
 
 # PFC
-prod_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='prod').Scénario.unique())
-load_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='conso').Scénario.unique())
-inputs = {}
-inputs['calibration_path'] = '/frontend/PFC/outputs/2025-02-06_v1'
-inputs['eex_path'] = '/frontend/vercast/EEX'
-inputs['historic_years'] = [2017, 2018, 2019]
-inputs['adjustment_date'] = '2024-09-18'
-inputs['scenario_file'] = '/frontend/vercast/Scénarios variables explicatives.xlsx'
-inputs["pv_scenario_id"] = "RTE - référence - BP23"
-inputs["eol_scenario_id"] = "RTE - référence - BP23"
-inputs["load_scenario_id"] = "RTE - référence - BP23"
-adj_PFC, quot = adjusted_pfc_from_scenario(**inputs, return_quot=True)
-adj_PFC_dict = {}
-adj_PFC_dict['Hourly'] = adj_PFC
-adj_PFC_dict['Daily'] = adj_PFC.resample('D').mean().round(1)
-adj_PFC_dict['Monthly'] = adj_PFC.resample('MS').mean().round(1).reindex(adj_PFC_dict['Daily'].index).ffill()
+# prod_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='prod').Scénario.unique())
+# load_scenarios_ls = list(pd.read_excel('/frontend/vercast/Scénarios variables explicatives.xlsx', sheet_name='conso').Scénario.unique())
+# inputs = {}
+# inputs['calibration_path'] = '/frontend/PFC/outputs/2025-02-06_v1'
+# inputs['eex_path'] = '/frontend/vercast/EEX'
+# inputs['historic_years'] = [2017, 2018, 2019]
+# inputs['adjustment_date'] = '2024-09-18'
+# inputs['scenario_file'] = '/frontend/vercast/Scénarios variables explicatives.xlsx'
+# inputs["pv_scenario_id"] = "RTE - référence - BP23"
+# inputs["eol_scenario_id"] = "RTE - référence - BP23"
+# inputs["load_scenario_id"] = "RTE - référence - BP23"
+# adj_PFC, quot = adjusted_pfc_from_scenario(**inputs, return_quot=True)
+# adj_PFC_dict = {}
+# adj_PFC_dict['Hourly'] = adj_PFC
+# adj_PFC_dict['Daily'] = adj_PFC.resample('D').mean().round(1)
+# adj_PFC_dict['Monthly'] = adj_PFC.resample('MS').mean().round(1).reindex(adj_PFC_dict['Daily'].index).ffill()
 
 
 # Other
@@ -262,138 +262,138 @@ app.layout = dcc.Tabs(className='custom-tabs', parent_className='custom-tabs-con
                 n_clicks = 0)
         ])
     ]),
-    dcc.Tab(label='PFC', className='custom-tab', selected_className= 'custom-tab--selected', children = [
-        html.Div(id = 'dash_page_pfc', children = [
-            html.Div(className = 'horizontal_container', children = [
-                html.H1(
-                    className = 'heading page_title',
-                    children = f'PFC Dashboard - {today.strftime(format="%d/%m/%Y")}'),
-                html.Img(
-                    className = 'logo',
-                    src = "assets/logo_bleu.png")
-            ]),
-            html.Div(className = 'horizontal_container', children = [
-                html.Div(id = 'pfc_figure_container', className = 'figure_container', children = [
-                    html.Div(className = 'horizontal_container menu', children = [
-                        dcc.Input(
-                            id = 'start-date-pfc',
-                            className = 'menu_item',
-                            type = 'date',
-                            value = adj_PFC.index[0].date()),
-                        dcc.Input(
-                            id = 'end-date-pfc',
-                            className = 'menu_item',
-                            type = 'date',
-                            value = adj_PFC.index[-1].date()),
-                        dbc.Select(
-                            id = 'sampling-dropdown-pfc',
-                            className = 'menu_item',
-                            options = [{'label': sampling, 'value': sampling} for sampling in ['Hourly', 'Daily', 'Monthly']],
-                            value = 'Hourly'),
-                        dbc.Select(
-                            id = 'tenor-dropdown-pfc',
-                            className = 'menu_item',
-                            options = [{'label': sampling, 'value': sampling} for sampling in ['None', 'Month', 'Quarter', 'Year']],
-                            value = 'None'),
-                        dbc.Select(
-                            id = 'pv-dropdown-pfc',
-                            className = 'menu_item',
-                            options = [{'label': f'PV: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
-                            value = inputs["pv_scenario_id"]),
-                        dbc.Select(
-                            id = 'eol-dropdown-pfc',
-                            className = 'menu_item',
-                            options = [{'label': f'Wind: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
-                            value = inputs["eol_scenario_id"]),
-                        dbc.Select(
-                            id = 'load-dropdown-pfc',
-                            className = 'menu_item',
-                            options = [{'label': f'Load: {scenario}', 'value': scenario} for scenario in load_scenarios_ls],
-                            value = inputs["load_scenario_id"]),
-                        html.Button(
-                            'Download',
-                            id = 'download-button-pfc',
-                            className = 'menu_item'),
-                        dcc.Download(
-                            id = 'download-pfc')
-                    ]),
-                    dcc.Store(
-                        id = 'adj-pfc',
-                        data = {"adj_PFC_dict" : {k: v.to_json(orient="split", date_format="iso") for k, v in adj_PFC_dict.items()},
-                                "quot" : quot.reset_index().to_json(orient="split", date_format="iso")}),
-                    dcc.Store(  
-                        id = 'data-pfc',
-                        data = plot_pfc_fig(adj_PFC_dict, quot.reset_index()).to_dict()),
-                    dcc.Graph(
-                        id = 'graph-pfc',
-                        figure = plot_pfc_fig(adj_PFC_dict, quot.reset_index()))
-                ]) 
-            ])
-        ])
-    ])
+    # dcc.Tab(label='PFC', className='custom-tab', selected_className= 'custom-tab--selected', children = [
+    #     html.Div(id = 'dash_page_pfc', children = [
+    #         html.Div(className = 'horizontal_container', children = [
+    #             html.H1(
+    #                 className = 'heading page_title',
+    #                 children = f'PFC Dashboard - {today.strftime(format="%d/%m/%Y")}'),
+    #             html.Img(
+    #                 className = 'logo',
+    #                 src = "assets/logo_bleu.png")
+    #         ]),
+    #         html.Div(className = 'horizontal_container', children = [
+    #             html.Div(id = 'pfc_figure_container', className = 'figure_container', children = [
+    #                 html.Div(className = 'horizontal_container menu', children = [
+    #                     dcc.Input(
+    #                         id = 'start-date-pfc',
+    #                         className = 'menu_item',
+    #                         type = 'date',
+    #                         value = adj_PFC.index[0].date()),
+    #                     dcc.Input(
+    #                         id = 'end-date-pfc',
+    #                         className = 'menu_item',
+    #                         type = 'date',
+    #                         value = adj_PFC.index[-1].date()),
+    #                     dbc.Select(
+    #                         id = 'sampling-dropdown-pfc',
+    #                         className = 'menu_item',
+    #                         options = [{'label': sampling, 'value': sampling} for sampling in ['Hourly', 'Daily', 'Monthly']],
+    #                         value = 'Hourly'),
+    #                     dbc.Select(
+    #                         id = 'tenor-dropdown-pfc',
+    #                         className = 'menu_item',
+    #                         options = [{'label': sampling, 'value': sampling} for sampling in ['None', 'Month', 'Quarter', 'Year']],
+    #                         value = 'None'),
+    #                     dbc.Select(
+    #                         id = 'pv-dropdown-pfc',
+    #                         className = 'menu_item',
+    #                         options = [{'label': f'PV: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
+    #                         value = inputs["pv_scenario_id"]),
+    #                     dbc.Select(
+    #                         id = 'eol-dropdown-pfc',
+    #                         className = 'menu_item',
+    #                         options = [{'label': f'Wind: {scenario}', 'value': scenario} for scenario in prod_scenarios_ls],
+    #                         value = inputs["eol_scenario_id"]),
+    #                     dbc.Select(
+    #                         id = 'load-dropdown-pfc',
+    #                         className = 'menu_item',
+    #                         options = [{'label': f'Load: {scenario}', 'value': scenario} for scenario in load_scenarios_ls],
+    #                         value = inputs["load_scenario_id"]),
+    #                     html.Button(
+    #                         'Download',
+    #                         id = 'download-button-pfc',
+    #                         className = 'menu_item'),
+    #                     dcc.Download(
+    #                         id = 'download-pfc')
+    #                 ]),
+    #                 dcc.Store(
+    #                     id = 'adj-pfc',
+    #                     data = {"adj_PFC_dict" : {k: v.to_json(orient="split", date_format="iso") for k, v in adj_PFC_dict.items()},
+    #                             "quot" : quot.reset_index().to_json(orient="split", date_format="iso")}),
+    #                 dcc.Store(  
+    #                     id = 'data-pfc',
+    #                     data = plot_pfc_fig(adj_PFC_dict, quot.reset_index()).to_dict()),
+    #                 dcc.Graph(
+    #                     id = 'graph-pfc',
+    #                     figure = plot_pfc_fig(adj_PFC_dict, quot.reset_index()))
+    #             ]) 
+    #         ])
+    #     ])
+    # ])
 ])
 
-@callback(
-    Output('download-pfc', 'data'),
-    Input('download-button-pfc', 'n_clicks'),
-    Input('start-date-pfc', 'value'),
-    Input('end-date-pfc', 'value'),
-    Input('sampling-dropdown-pfc', 'value'),
-    Input('adj-pfc', 'data'),
-    prevent_initial_call=True)
-def download_spot(btn, start_date, end_date, sampling, data):
-    adf_PFC = pd.read_json(StringIO(data['adj_PFC_dict'][sampling]), orient='split')
-    if 'download-button-pfc' == ctx.triggered_id:
-        start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
-        filtered_df = adf_PFC.loc[start:end]
-        return dcc.send_data_frame(filtered_df.to_excel, 
-                                   f"{start_date.replace('-', '')}_{end_date.replace('-', '')}_pfc.xlsx", 
-                                   sheet_name=f'{sampling} PFC')
+# @callback(
+#     Output('download-pfc', 'data'),
+#     Input('download-button-pfc', 'n_clicks'),
+#     Input('start-date-pfc', 'value'),
+#     Input('end-date-pfc', 'value'),
+#     Input('sampling-dropdown-pfc', 'value'),
+#     Input('adj-pfc', 'data'),
+#     prevent_initial_call=True)
+# def download_spot(btn, start_date, end_date, sampling, data):
+#     adf_PFC = pd.read_json(StringIO(data['adj_PFC_dict'][sampling]), orient='split')
+#     if 'download-button-pfc' == ctx.triggered_id:
+#         start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
+#         filtered_df = adf_PFC.loc[start:end]
+#         return dcc.send_data_frame(filtered_df.to_excel, 
+#                                    f"{start_date.replace('-', '')}_{end_date.replace('-', '')}_pfc.xlsx", 
+#                                    sheet_name=f'{sampling} PFC')
 
-@callback(
-    Output('graph-pfc', 'figure'),
-    Output('data-pfc', 'data'),
-    Input('start-date-pfc', 'value'),
-    Input('end-date-pfc', 'value'),
-    Input('sampling-dropdown-pfc', 'value'),
-    Input('tenor-dropdown-pfc', 'value'),
-    Input('adj-pfc', 'data'),
-    Input('data-pfc', 'data'))
-def update_pfc_fig(start_date, end_date, sampling, tenor, data, pfc_fig):
-    adf_PFC = pd.read_json(StringIO(data['adj_PFC_dict'][sampling]), orient='split')
-    try:
-        start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
-        filtered_df = adf_PFC[start:end]
-        pfc_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = (filtered_df.index[0], filtered_df.index[-1] + (filtered_df.index[1] - filtered_df.index[0]))
-        pfc_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df.quantile(0.25, axis=1).min(), filtered_df.quantile(0.75, axis=1).max())
-        for trace in pfc_fig['data']:
-            if (trace.get('legendgroup', '') == sampling) or (trace.get('legendgroup', '') == tenor):
-                trace['visible'] = True
-            else:
-                trace['visible'] = False
-    except IndexError:
-        pass
-    return pfc_fig, pfc_fig
+# @callback(
+#     Output('graph-pfc', 'figure'),
+#     Output('data-pfc', 'data'),
+#     Input('start-date-pfc', 'value'),
+#     Input('end-date-pfc', 'value'),
+#     Input('sampling-dropdown-pfc', 'value'),
+#     Input('tenor-dropdown-pfc', 'value'),
+#     Input('adj-pfc', 'data'),
+#     Input('data-pfc', 'data'))
+# def update_pfc_fig(start_date, end_date, sampling, tenor, data, pfc_fig):
+#     adf_PFC = pd.read_json(StringIO(data['adj_PFC_dict'][sampling]), orient='split')
+#     try:
+#         start, end = pd.Timestamp(start_date), pd.Timestamp(end_date) + pd.Timedelta(hours=23)
+#         filtered_df = adf_PFC[start:end]
+#         pfc_fig.setdefault('layout', {}).setdefault('xaxis', {})['range'] = (filtered_df.index[0], filtered_df.index[-1] + (filtered_df.index[1] - filtered_df.index[0]))
+#         pfc_fig['layout'].setdefault('yaxis', {})['range'] = (filtered_df.quantile(0.25, axis=1).min(), filtered_df.quantile(0.75, axis=1).max())
+#         for trace in pfc_fig['data']:
+#             if (trace.get('legendgroup', '') == sampling) or (trace.get('legendgroup', '') == tenor):
+#                 trace['visible'] = True
+#             else:
+#                 trace['visible'] = False
+#     except IndexError:
+#         pass
+#     return pfc_fig, pfc_fig
 
-@callback(
-    Output('adj-pfc', 'data'),
-    Output('graph-pfc', 'figure', allow_duplicate=True),
-    Output('data-pfc', 'data', allow_duplicate=True),
-    Input('pv-dropdown-pfc', 'value'),
-    Input('eol-dropdown-pfc', 'value'),
-    Input('load-dropdown-pfc', 'value'),
-    prevent_initial_call=True)
-def compute_adj_pfc(pv_scenario, eol_scenario, load_scenario):
-    inputs['pv_scenario_id'] = pv_scenario
-    inputs['eol_scenario_id'] = eol_scenario
-    inputs['load_scenario_id'] = load_scenario
-    adj_PFC, quot = adjusted_pfc_from_scenario(**inputs)
-    adj_PFC_dict = {}
-    adj_PFC_dict['Hourly'] = adj_PFC
-    adj_PFC_dict['Daily'] = adj_PFC.resample('D').mean()
-    adj_PFC_dict['Monthly'] = adj_PFC.resample('MS').mean()
-    pfc_fig = plot_pfc_fig(adj_PFC_dict, quot.reset_index()).to_dict()
-    return {"adj_PFC_dict" : {k: v.to_json(orient="split", date_format="iso") for k, v in adj_PFC_dict.items()}, "quot" : quot.reset_index().to_json(orient="split", date_format="iso")}, pfc_fig, pfc_fig
+# @callback(
+#     Output('adj-pfc', 'data'),
+#     Output('graph-pfc', 'figure', allow_duplicate=True),
+#     Output('data-pfc', 'data', allow_duplicate=True),
+#     Input('pv-dropdown-pfc', 'value'),
+#     Input('eol-dropdown-pfc', 'value'),
+#     Input('load-dropdown-pfc', 'value'),
+#     prevent_initial_call=True)
+# def compute_adj_pfc(pv_scenario, eol_scenario, load_scenario):
+#     inputs['pv_scenario_id'] = pv_scenario
+#     inputs['eol_scenario_id'] = eol_scenario
+#     inputs['load_scenario_id'] = load_scenario
+#     adj_PFC, quot = adjusted_pfc_from_scenario(**inputs)
+#     adj_PFC_dict = {}
+#     adj_PFC_dict['Hourly'] = adj_PFC
+#     adj_PFC_dict['Daily'] = adj_PFC.resample('D').mean()
+#     adj_PFC_dict['Monthly'] = adj_PFC.resample('MS').mean()
+#     pfc_fig = plot_pfc_fig(adj_PFC_dict, quot.reset_index()).to_dict()
+#     return {"adj_PFC_dict" : {k: v.to_json(orient="split", date_format="iso") for k, v in adj_PFC_dict.items()}, "quot" : quot.reset_index().to_json(orient="split", date_format="iso")}, pfc_fig, pfc_fig
 
 @callback(
     Output('download-spot', 'data'),
@@ -598,4 +598,4 @@ def update_gas_figure(start_date, end_date, gas_fig):
         pass
     return gas_fig, gas_fig    
 
-app.run(host='0.0.0.0')
+app.run()

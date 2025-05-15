@@ -1,0 +1,6 @@
+openpyxl
+psycopg2
+pandas
+numpy
+boto3
+python-dateutil

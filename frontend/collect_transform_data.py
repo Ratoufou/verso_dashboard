@@ -17,14 +17,20 @@ def execute_query(query, timestamp=False, db_config=DB_CONFIG):
     results = cursor.fetchall()
     df =  pd.DataFrame(data=results, 
                        columns=[d.name for d in cursor.description])
-    if timestamp:
-        df.timestamp = pd.to_datetime(df.timestamp)
-        df.set_index('timestamp', inplace=True)
     return df
 
 
 def get_spot_prices():
-    query = 'SELECT * FROM elec_day_ahead_market'
+    query = """
+    SELECT 
+        delivery_start, 
+        delivery_end, 
+        price 
+    FROM elec_day_ahead_market 
+    WHERE source = 'ENTSOE' 
+    AND country = 'FR' 
+    AND tenor = 'PT1H'
+    ORDER BY delivery_start"""
     spot_df = execute_query(query)
     spot_df['delivery_start'] = pd.to_datetime(spot_df.delivery_start, utc=True).dt.tz_convert('CET').dt.tz_localize(None)
     spot_df['delivery_end'] = pd.to_datetime(spot_df.delivery_end, utc=True).dt.tz_convert('CET').dt.tz_localize(None)
@@ -32,29 +38,52 @@ def get_spot_prices():
 
 
 def get_futures_prices():
-    query = 'SELECT * FROM elec_futures_market'
+    query = """
+    WITH middle_table AS (
+        SELECT 
+            trading_date,
+            delivery_start::TIMESTAMP + (delivery_end::TIMESTAMP - delivery_start::TIMESTAMP)/2 AS middle,
+            CASE
+                WHEN peak THEN 'Peak'
+                ELSE 'Base'
+            END AS type,
+            tenor,
+            settlement_price
+        FROM elec_futures_market 
+        WHERE tenor IN ('Year', 'Quarter', 'Month') 
+        AND source IN ('EEX', 'KPLER') 
+        AND country = 'FR'
+        AND trading_date < delivery_start
+    ) SELECT
+        trading_date,
+        EXTRACT(YEAR FROM middle) AS delivery_year,
+        tenor,
+        CASE
+            WHEN tenor = 'Year' THEN 1
+            WHEN tenor = 'Quarter' THEN EXTRACT(QUARTER FROM middle)
+            WHEN tenor = 'Month' THEN EXTRACT(MONTH FROM middle)
+        END AS product_index,
+        type,
+        settlement_price
+    FROM middle_table
+    ORDER BY trading_date, delivery_year, tenor, type, product_index
+    """
     futures_df = execute_query(query)
-    futures_df = futures_df[futures_df.tenor.isin(['Year', 'Quarter', 'Month'])]
-    futures_df = futures_df[futures_df.trading_date < futures_df.delivery_start]
-    futures_df['middle'] = pd.to_datetime(futures_df.delivery_start + (futures_df.delivery_end - futures_df.delivery_start)/2)
-    futures_df['delivery_year'] = futures_df.middle.dt.year
-    futures_df.loc[futures_df.tenor == 'Month', 'product_index'] = futures_df.loc[futures_df.tenor == 'Month', 'middle'].dt.month
-    futures_df.loc[futures_df.tenor == 'Quarter', 'product_index'] = futures_df.loc[futures_df.tenor == 'Quarter', 'middle'].dt.quarter
-    futures_df.loc[futures_df.tenor == 'Year', 'product_index'] = 1
-    futures_df.product_index = futures_df.product_index.astype(int)
-    futures_df['type'] = np.where(futures_df.peak, 'Peak', 'Base')
-    return futures_df.drop(columns=['delivery_start', 'delivery_end', 'middle', 'peak'])
+    return futures_df
 
 
 def get_gas_prices():
-    query = 'SELECT * FROM gas_day_ahead_market'
-    gas_df = execute_query(query)
+    query = """
+    SELECT 
+        delivery_start, 
+        last_price 
+    FROM gas_day_ahead_market 
+    WHERE source = 'KPLER' 
+    AND country = 'FR' 
+    AND tenor = 'Day' 
+    ORDER BY delivery_start"""
+    gas_df = execute_query(query).set_index('delivery_start')
     return gas_df
-
-
-def filter_gas_df(gas_df):
-    filtered_gas_df = gas_df[gas_df.tenor == 'Day'][['delivery_start', 'last_price']].set_index('delivery_start').sort_index()
-    return filtered_gas_df
 
 
 def gather_tenor_info(futures_df, spot_df):

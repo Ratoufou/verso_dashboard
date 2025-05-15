@@ -52,9 +52,9 @@ def RTE_Consumption_process(date, country, dir, DB_CONFIG):
         for _, row in ts_dict[cons_type].iterrows():
             cursor.execute(
                 ('INSERT INTO consumption ' 
-                '(cons_start, cons_end, source, country, tenor, curve_type, quantity, unit) ' 
-                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s) '
-                'ON CONFLICT (cons_start, cons_end, source, country, curve_type) DO NOTHING'),
+                '(cons_start, cons_end, source, country, tenor, curve_type, quantity, unit, processing) ' 
+                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) '
+                'ON CONFLICT (cons_start, cons_end, source, country, curve_type, processing) DO NOTHING'),
 
                 (row.start_date, 
                  row.end_date, 
@@ -63,7 +63,8 @@ def RTE_Consumption_process(date, country, dir, DB_CONFIG):
                  row.tenor, 
                  cons_type,
                  round(float(row.value), 2), 
-                 'MW')
+                 'MW',
+                 'Unspecified')
             )
     
     conn.commit()

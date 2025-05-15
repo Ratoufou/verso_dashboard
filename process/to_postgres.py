@@ -10,12 +10,12 @@ parser.add_argument('--start', type=str)
 parser.add_argument('--end', type=str)
 args = parser.parse_args()
 
-DB_CONFIG = {
-    'host' : 'db',
-    'database' : 'verso_database',
-    'user' : 'root',
-    'password' : 'versosql'
-}
+# DB_CONFIG = {
+#     'host' : 'db',
+#     'database' : 'verso_database',
+#     'user' : 'root',
+#     'password' : 'versosql'
+# }
 
 process_dict_daily = {
     # 'ENTSOE/DayAhead' : process_scripts.ENTSOE_DayAhead_process,
@@ -25,11 +25,11 @@ process_dict_daily = {
     # 'RTE/Production' : process_scripts.RTE_Production_process,
     # 'RTE/Capacities' : process_scripts.RTE_Capacities_process,
     # 'RTE/GenerationForecast' : process_scripts.RTE_GenerationForecast_process,
-    # 'RTE/Imbalance' : process_scripts.RTE_Imbalance_process,
+    'RTE/Imbalance' : process_scripts.RTE_Imbalance_process,
     # 'RTE/BalancingCapacity' : process_scripts.RTE_BalancingCapacity_process,
     # 'EEX/Power/Futures' : process_scripts.EEX_Futures_Elec_process,
     # 'ENEDIS/Temperature' : process_scripts.ENEDIS_Temperature_process, 
-    'ODRE/Eco2mix' : process_scripts.ODRE_Eco2mix_process
+    # 'ODRE/Eco2mix' : process_scripts.ODRE_Eco2mix_process
 }
 
 process_dict_yearly = {

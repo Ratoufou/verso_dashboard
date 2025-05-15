@@ -90,15 +90,6 @@ AND p.production_type_modify = c.capacities_type;
 
 -- Capacity factor ODRE - Eco2mix
 
-SELECT 
-    *
-FROM production_per_type
-WHERE tenor = 'PT15M'
-AND country = 'FR'
-AND production_type IN ('SOLAR', 'WIND')
-AND source LIKE 'ODRE_Eco2mix%';
-
-
 INSERT INTO capacity_factor_per_type (
     cf_start,
     cf_end,
